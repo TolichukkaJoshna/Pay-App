@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Form</title>
+    <link href="styles.css" rel="stylesheet"/>
+    <style>
+        .login-container{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 4px 6px rgba(0,0,0,0.1);
+            width:300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+   <div class="login-container" id="login-container">
+    <h2>Login Form</h2>
+    <form action="index.html" method="POST" id="login-form">
+      <div class="form-fields">
+        <label for="email">Email Address: </label>
+        <input type="email" id="email" placeholder="Enter your email" required/>
+  </div>
+  <div class="form-fields">
+    <label for="password">Password: </label>
+    <input type="password" id="password" placeholder="Enter your password" required/>
+</div>
+    <button type="submit" class="submit-btn">Login</button>
+        <div class="form-fields">
+            <a href="registration.html">Do you have an account?Register</a>
+        </div>
+    </form>
+    <div class="Message" id="login-message">
+    </div>
+   </div>
+   <div class="login-container" id="otp-container" style="display:none;">
+    <h2>Verify OTP</h2>
+    <form id="otp-form">
+        <div class="form-fields">
+            <label for="otp">Enter OTP</label>
+            <input type="text" id="otp" placeholder="Enter the OTP sent to your email" required>
+        </div>
+        <button type="submit" class="submit-btn">Verify OTP</button>
+    </form>
+    <div class="message" id="otp-message"></div>
+   </div>
+   
+   <script>
+    const loginForm=document.getElementById('login-form');
+    const otpForm=document.getElementById('otp-form');
+    const loginContainer=document.getElementById('login-container');
+    const otpContainer=document.getElementById('otp-container');
+    const loginMessage=document.getElementById('login-message');
+    const otpMessage=document.getElementById('otp-message');
+    let generatedOTP = '';
+
+    loginForm.addEventListener('submit',function(event){
+        event.preventDefault();
+        const email=document.getElementById('email').value;
+        const password=document.getElementById('password').value;
+            generatedOTP = Math.floor(100000 + Math.random()*900000).toString();
+            loginMessage.textContent = 'Login Successful.OTP sent to your mail';
+            console.log('Generated OTP: ',generatedOTP);
+            loginContainer.style.display= 'none';
+            otpContainer.style.display= 'block';
+
+    });
+     otpForm.addEventListener('submit',function(event){
+        event.preventDefault();
+        const enteredOTP = document.getElementById('otp').value;
+        if(enteredOTP === generatedOTP) {
+            otpMessage.textContent = 'OTP verified successfully:welcome';
+            otpMessage.style.color = 'green';
+        }
+        else{
+            otpMessage.textContent = 'Invalid OTP.Please try again later';
+            otpMessage.style.color = 'red';
+        }
+     });
+   </script>
+   </body>
+   </html>
